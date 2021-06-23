@@ -1,5 +1,5 @@
 /**
- * Author: Oats Â©2021
+ * Author: Oats ©2021
  * Project: Left2Craft
  */
 

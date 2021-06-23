@@ -1,5 +1,5 @@
 /**
- * Author: Oats Â©2021
+ * Author: Oats ©2021
  * Project: Left2Craft
  */
 
@@ -113,7 +113,7 @@ public class CampfireRitualListener implements Listener {
 
     // Tell the player what the next step is
     boostingPlayer.sendMessage(plugin.PLUGIN_CHAT_PREFIX +
-          "Gather matching armour and equip the stand to complete the respawn ritual, ï¿½l" + boostingPlayer.getDisplayName() + "ï¿½r!");
+          "Gather matching armour and equip the stand to complete the respawn ritual, §l" + boostingPlayer.getDisplayName() + "§r!");
 
     // Play campfire boost effects
     currWorld.playSound(standLoc, Sound.ENTITY_LIGHTNING_BOLT_IMPACT, 1f, 1f);
@@ -171,10 +171,10 @@ public class CampfireRitualListener implements Listener {
    * @param a_player Player that lit/placed the campfire, or null if from environmental source.
    */
   private void startCampfireRitual(Block a_campfireBlock, Player a_player) {
-    String message = plugin.PLUGIN_CHAT_PREFIX + "Ignite this ï¿½lï¿½6Campfireï¿½r with ï¿½lï¿½8Gunpowderï¿½r to prepare the respawn ritual";
+    String message = plugin.PLUGIN_CHAT_PREFIX + "Ignite this §l§6Campfire§r with §l§8Gunpowder§r to prepare the respawn ritual";
     if (a_player != null) {
       // Player present, just tell them
-      a_player.sendMessage(message + ", ï¿½l" + a_player.getDisplayName() + "ï¿½r!");
+      a_player.sendMessage(message + ", §l" + a_player.getDisplayName() + "§r!");
     } else {
       // No player present, tell everyone
       Bukkit.broadcastMessage(message + "!");

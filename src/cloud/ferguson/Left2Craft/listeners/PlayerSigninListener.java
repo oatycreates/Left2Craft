@@ -1,5 +1,5 @@
 /**
- * Author: Oats Â©2021
+ * Author: Oats ©2021
  * Project: Left2Craft
  */
 
@@ -24,6 +24,6 @@ public class PlayerSigninListener implements Listener {
   @EventHandler
   public void playerSigninEvent(PlayerJoinEvent a_event) {
     Player player = a_event.getPlayer();
-    player.sendMessage(plugin.PLUGIN_CHAT_PREFIX + "Welcome, you can use lit ï¿½lï¿½6Campfiresï¿½r to respawn players!");
+    player.sendMessage(plugin.PLUGIN_CHAT_PREFIX + "Welcome, you can use lit §l§6Campfires§r to respawn players!");
   }
 }
