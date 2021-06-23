@@ -1,5 +1,5 @@
 /**
- * Author: Oats Â©2021
+ * Author: Oats ©2021
  * Project: Left2Craft
  */
 
@@ -37,9 +37,8 @@ import cloud.ferguson.Left2Craft.listeners.LastStandingBlockListener;
 import cloud.ferguson.Left2Craft.listeners.PlayerLifeListener;
 import cloud.ferguson.Left2Craft.listeners.PlayerSigninListener;
 
-
 public class Main extends JavaPlugin {
-  public final String PLUGIN_CHAT_PREFIX = "ï¿½d[Left2Craft]ï¿½r ";
+  public final String PLUGIN_CHAT_PREFIX = "§d[Left2Craft]§r ";
 
   public final String ARMOR_PREFIX_LEATHER = "LEATHER";
   public final String ARMOR_PREFIX_IRON = "IRON";
@@ -74,6 +73,7 @@ public class Main extends JavaPlugin {
 
   /**
    * Returns a more display-ready version of the world name.
+   * 
    * @param a_world World to return name for.
    * @return Display version of the world name or internal name as fallback.
    */
@@ -81,19 +81,20 @@ public class Main extends JavaPlugin {
     Environment worldEnv = a_world.getEnvironment();
     String worldName = a_world.getName();
     if (worldEnv == Environment.NORMAL) {
-      worldName = "ï¿½2Overworldï¿½r";
+      worldName = "§2Overworld§r";
     } else if (worldEnv == Environment.NETHER) {
-      worldName = "ï¿½4Netherï¿½r";
+      worldName = "§4Nether§r";
     } else if (worldEnv == Environment.THE_END) {
-      worldName = "ï¿½8Endï¿½r";
+      worldName = "§8End§r";
     }
     return worldName;
   }
 
   /**
    * Spawns chest(s) with the player's items at a valid position.
+   * 
    * @param a_playerEnt Player entity that has died.
-   * @param a_drops The items this player will drop.
+   * @param a_drops     The items this player will drop.
    * @return Position of the spawned player chests.
    */
   public Location spawnPlayerDeathChests(Player a_player, List<ItemStack> a_drops) {
@@ -133,6 +134,7 @@ public class Main extends JavaPlugin {
 
   /**
    * Returns the online Player matching the input name.
+   * 
    * @param a_playerName Player name to search for.
    * @return Player if found or nil if no online player matched.
    */
@@ -149,7 +151,9 @@ public class Main extends JavaPlugin {
   }
 
   /**
-   * Return the armour type prefix so that it can be compared with other armour pieces.
+   * Return the armour type prefix so that it can be compared with other armour
+   * pieces.
+   * 
    * @param a_armorMaterial Material to extract the armour type prefix from.
    * @return Armour type prefix, or blank if not valid armour material.
    */
@@ -167,6 +171,7 @@ public class Main extends JavaPlugin {
 
   /**
    * Selects a random spectator player for potential revival.
+   * 
    * @return Selected player or null if no players are in spectator.
    */
   public Player getRandomSpectator() {
@@ -184,9 +189,12 @@ public class Main extends JavaPlugin {
 
   /**
    * Checks whether a ritual stand is fully equipped with matching armour.
-   * @param a_armorStand Armour stand to check.
-   * @param a_incomingItem (Nullable) Item being added to the armour stand via an event or similar.
-   * @return The ritual tier to use from the stand's equipped armour. Or blank if stand isn't equipped properly.
+   * 
+   * @param a_armorStand   Armour stand to check.
+   * @param a_incomingItem (Nullable) Item being added to the armour stand via an
+   *                       event or similar.
+   * @return The ritual tier to use from the stand's equipped armour. Or blank if
+   *         stand isn't equipped properly.
    */
   public String isRitualStandEquipped(ArmorStand a_armorStand, ItemStack a_incomingItem) {
     // Ensure the stand is fully equipped
@@ -212,7 +220,8 @@ public class Main extends JavaPlugin {
       }
     }
 
-    // Because the incoming item wont have been added yet, it will need to be counted separately
+    // Because the incoming item wont have been added yet, it will need to be
+    // counted separately
     if (a_incomingItem != null && a_incomingItem.getAmount() > 0) {
       Material slotArmourMaterial = a_incomingItem.getType();
       String slotArmorType = getArmorTypePrefix(slotArmourMaterial);
@@ -238,11 +247,13 @@ public class Main extends JavaPlugin {
   }
 
   /**
-   * Checks for whether the respawn ritual has been applied correctly.
-   * Performs the ritual if so.
-   * @param a_player Player to revive.
-   * @param a_armorStand Armour stand prepared for reviving the player.
-   * @param a_incomingItem (Nullable) Item being added to the armour stand via an event or similar.
+   * Checks for whether the respawn ritual has been applied correctly. Performs
+   * the ritual if so.
+   * 
+   * @param a_player       Player to revive.
+   * @param a_armorStand   Armour stand prepared for reviving the player.
+   * @param a_incomingItem (Nullable) Item being added to the armour stand via an
+   *                       event or similar.
    * @return True if player was revived, false if not.
    */
   public boolean checkRespawnRitual(Player a_player, ArmorStand a_armorStand, ItemStack a_incomingItem) {
@@ -251,13 +262,15 @@ public class Main extends JavaPlugin {
 
     // Ensure the stand is fully equipped
     if (armorType.isEmpty()) {
-      Bukkit.broadcastMessage(PLUGIN_CHAT_PREFIX + "Can't revive ï¿½l" + a_player.getDisplayName() + "ï¿½r yet, their stand needs full matching armour!");
+      Bukkit.broadcastMessage(PLUGIN_CHAT_PREFIX + "Can't revive §l" + a_player.getDisplayName()
+          + "§r yet, their stand needs full matching armour!");
       return false;
     }
 
     // Ensure this is a stand spawned from the campfire ritual
     if (!a_armorStand.isInvulnerable()) {
-      Bukkit.broadcastMessage(PLUGIN_CHAT_PREFIX + "Only stands from the ï¿½lï¿½6Campfireï¿½r ritual can be used for revival!");
+      Bukkit.broadcastMessage(
+          PLUGIN_CHAT_PREFIX + "Only stands from the §l§6Campfire§r ritual can be used for revival!");
       return false;
     }
 
@@ -272,7 +285,8 @@ public class Main extends JavaPlugin {
     a_player.setTotalExperience(0);
     Collection<PotionEffect> activeEffects = a_player.getActivePotionEffects();
     for (PotionEffect effect : activeEffects) {
-      // There will potentially be overlap here if the player has multiple effects of the same type, but that shouldn't cause any issues
+      // There will potentially be overlap here if the player has multiple effects of
+      // the same type, but that shouldn't cause any issues
       a_player.removePotionEffect(effect.getType());
     }
 
@@ -281,19 +295,23 @@ public class Main extends JavaPlugin {
 
     String worldName = getWorldName(a_player.getLocation().getWorld());
     String ritualName = armorType.substring(0, 1).toUpperCase() + armorType.substring(1).toLowerCase(); // Capitalise
-    Bukkit.broadcastMessage(PLUGIN_CHAT_PREFIX + "ï¿½l" + a_player.getName() + "ï¿½r was revived in the " + worldName + " using the ï¿½l" + ritualName + "ï¿½r ritual!");
+    Bukkit.broadcastMessage(PLUGIN_CHAT_PREFIX + "§l" + a_player.getName() + "§r was revived in the " + worldName
+        + " using the §l" + ritualName + "§r ritual!");
 
     return true;
   }
 
   /**
-   * Applies the relevant bonus/debuff from respawning the player using certain armour tiers.
-   * @param a_revivedPlayer The player that is being revived
+   * Applies the relevant bonus/debuff from respawning the player using certain
+   * armour tiers.
+   * 
+   * @param a_revivedPlayer   The player that is being revived
    * @param a_armorTypePrefix Armour type prefix that was used on the stand.
    */
   public void applyStandRitualEffect(Player a_revivedPlayer, String a_armorTypePrefix) {
     if (!isKnownArmorType(a_armorTypePrefix)) {
-      Bukkit.broadcastMessage(PLUGIN_CHAT_PREFIX + "ï¿½4Unknownï¿½r armour stand material! ï¿½l" + a_armorTypePrefix + "ï¿½r");
+      Bukkit.broadcastMessage(
+          PLUGIN_CHAT_PREFIX + "§4Unknown§r armour stand material! §l" + a_armorTypePrefix + "§r");
       return;
     }
 
@@ -317,8 +335,8 @@ public class Main extends JavaPlugin {
       newHealth = maxHealth;
       newHunger = 2;
       a_revivedPlayer.addPotionEffect(new PotionEffect(PotionEffectType.INCREASE_DAMAGE, TICKS_PER_SECOND * 60, 0));
-    } else if (a_armorTypePrefix.compareToIgnoreCase(ARMOR_PREFIX_DIAMOND) == 0 ||
-        a_armorTypePrefix.compareToIgnoreCase(ARMOR_PREFIX_CHAINMAIL) == 0) {
+    } else if (a_armorTypePrefix.compareToIgnoreCase(ARMOR_PREFIX_DIAMOND) == 0
+        || a_armorTypePrefix.compareToIgnoreCase(ARMOR_PREFIX_CHAINMAIL) == 0) {
       // Diamond/Chainmail - Full Hearts, Full Hunger
       newHealth = maxHealth;
       newHunger = HUNGER_MAX;
@@ -330,8 +348,10 @@ public class Main extends JavaPlugin {
       a_revivedPlayer.addPotionEffect(new PotionEffect(PotionEffectType.ABSORPTION, TICKS_PER_SECOND * 60 * 2, 3));
       a_revivedPlayer.addPotionEffect(new PotionEffect(PotionEffectType.REGENERATION, TICKS_PER_SECOND * 20, 1));
       a_revivedPlayer.addPotionEffect(new PotionEffect(PotionEffectType.FIRE_RESISTANCE, TICKS_PER_SECOND * 60 * 5, 0));
-      a_revivedPlayer.addPotionEffect(new PotionEffect(PotionEffectType.DAMAGE_RESISTANCE, TICKS_PER_SECOND * 60 * 5, 0));
-      a_revivedPlayer.addPotionEffect(new PotionEffect(PotionEffectType.INCREASE_DAMAGE, TICKS_PER_SECOND * 60 * 10, 0));
+      a_revivedPlayer
+          .addPotionEffect(new PotionEffect(PotionEffectType.DAMAGE_RESISTANCE, TICKS_PER_SECOND * 60 * 5, 0));
+      a_revivedPlayer
+          .addPotionEffect(new PotionEffect(PotionEffectType.INCREASE_DAMAGE, TICKS_PER_SECOND * 60 * 10, 0));
     }
 
     a_revivedPlayer.setHealth(newHealth);
@@ -341,19 +361,21 @@ public class Main extends JavaPlugin {
 
   /**
    * Returns whether
+   * 
    * @param a_armorTypePrefix Armour type prefix to check for.
    */
   public Boolean isKnownArmorType(String a_armorTypePrefix) {
-    return a_armorTypePrefix.compareToIgnoreCase(ARMOR_PREFIX_LEATHER) == 0 ||
-      a_armorTypePrefix.compareToIgnoreCase(ARMOR_PREFIX_IRON) == 0 ||
-      a_armorTypePrefix.compareToIgnoreCase(ARMOR_PREFIX_GOLD) == 0 ||
-      a_armorTypePrefix.compareToIgnoreCase(ARMOR_PREFIX_DIAMOND) == 0 ||
-      a_armorTypePrefix.compareToIgnoreCase(ARMOR_PREFIX_CHAINMAIL) == 0 ||
-      a_armorTypePrefix.compareToIgnoreCase(ARMOR_PREFIX_NETHERITE) == 0;
+    return a_armorTypePrefix.compareToIgnoreCase(ARMOR_PREFIX_LEATHER) == 0
+        || a_armorTypePrefix.compareToIgnoreCase(ARMOR_PREFIX_IRON) == 0
+        || a_armorTypePrefix.compareToIgnoreCase(ARMOR_PREFIX_GOLD) == 0
+        || a_armorTypePrefix.compareToIgnoreCase(ARMOR_PREFIX_DIAMOND) == 0
+        || a_armorTypePrefix.compareToIgnoreCase(ARMOR_PREFIX_CHAINMAIL) == 0
+        || a_armorTypePrefix.compareToIgnoreCase(ARMOR_PREFIX_NETHERITE) == 0;
   }
 
   /**
    * Returns the effective ritual tier of the input armour.
+   * 
    * @param a_armorType Armour type to retrieve tier for.
    * @return Ritual tier (higher is stronger), or -1 if invalid armour.
    */
@@ -377,25 +399,23 @@ public class Main extends JavaPlugin {
   }
 
   /**
-   * Finds enough free-space near the player death location to spawn the chest and stand.
+   * Finds enough free-space near the player death location to spawn the chest and
+   * stand.
+   * 
    * @param a_playerLoc Player death location.
    * @return Valid spawn location (or death location if not found)
    */
   private Location findValidStandLoc(Location a_playerLoc) {
     World world = a_playerLoc.getWorld();
-    // Start scanning from the block above to better represent where player is standing
+    // Start scanning from the block above to better represent where player is
+    // standing
     Location rayStartLoc = a_playerLoc.clone().add(new Vector(0, 1, 0));
     Location validSpawnLoc = null;
 
     // Try searching down and up for a valid block
     // Search down
-    RayTraceResult rayHit = world.rayTrace(rayStartLoc,
-        new Vector(0, -1, 0),
-        SPAWN_LOC_SEARCH_LIMIT,
-        FluidCollisionMode.NEVER,
-        true,
-        1,
-        (entity) -> entity == null);
+    RayTraceResult rayHit = world.rayTrace(rayStartLoc, new Vector(0, -1, 0), SPAWN_LOC_SEARCH_LIMIT,
+        FluidCollisionMode.NEVER, true, 1, (entity) -> entity == null);
     if (rayHit != null) {
       // Pick one block closer so we hopefully get a clear air-block
       validSpawnLoc = rayHit.getHitBlock().getLocation().clone().add(new Vector(0, 1, 0));
@@ -403,13 +423,8 @@ public class Main extends JavaPlugin {
 
     // Search up
     if (validSpawnLoc == null) {
-      rayHit = world.rayTrace(rayStartLoc,
-          new Vector(0, 1, 0),
-          SPAWN_LOC_SEARCH_LIMIT,
-          FluidCollisionMode.NEVER,
-          true,
-          1,
-          (entity) -> entity == null);
+      rayHit = world.rayTrace(rayStartLoc, new Vector(0, 1, 0), SPAWN_LOC_SEARCH_LIMIT, FluidCollisionMode.NEVER, true,
+          1, (entity) -> entity == null);
       if (rayHit != null) {
         // Pick some blocks closer so we hopefully get a clear air-block
         validSpawnLoc = rayHit.getHitBlock().getLocation().clone().add(new Vector(0, -2, 0));
@@ -425,10 +440,11 @@ public class Main extends JavaPlugin {
   }
 
   /**
-   * Spawns a chest for the player's loot. Will try to store as much
-   * of the drops as possible and will return the remaining drops.
+   * Spawns a chest for the player's loot. Will try to store as much of the drops
+   * as possible and will return the remaining drops.
+   * 
    * @param a_chestLoc Location to spawn the chest at.
-   * @param a_drops Items to try storing in the chest.
+   * @param a_drops    Items to try storing in the chest.
    * @return Remaining items that couldn't be stored.
    */
   private List<ItemStack> spawnPlayerChest(Location a_chestLoc, List<ItemStack> a_drops) {

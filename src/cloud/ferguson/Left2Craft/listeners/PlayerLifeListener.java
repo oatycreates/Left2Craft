@@ -59,7 +59,7 @@ public class PlayerLifeListener implements Listener {
       }
     }
     String worldName = plugin.getWorldName(player.getLocation().getWorld());
-    Bukkit.broadcastMessage(plugin.PLUGIN_CHAT_PREFIX + "§l" + player.getName() + "§r has died in the " + worldName + "!");
+    Bukkit.broadcastMessage(plugin.PLUGIN_CHAT_PREFIX + "Â©l" + player.getName() + "Â©r has died in the " + worldName + "!");
     Location standLoc = plugin.spawnPlayerDeathChests(player, drops);
     // Move player to valid stand loc to avoid constant falling off voids
     player.teleport(standLoc);

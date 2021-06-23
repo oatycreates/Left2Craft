@@ -1,6 +1,6 @@
 name: Left2Craft
-version: 0.6.0
-api-version: 1.16
+version: 0.7.0
+api-version: 1.17
 author: Oats
 main: cloud.ferguson.Left2Craft.Main
 description: Hardcore Minecraft with a twist! Bring your friends back with a revival ritual
